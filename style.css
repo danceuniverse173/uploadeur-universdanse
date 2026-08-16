@@ -1,0 +1,72 @@
+:root {
+  color-scheme: light dark;
+  --bg: #0b0d10;
+  --card: #15191f;
+  --text: #f5f7fa;
+  --muted: #b5bec9;
+  --border: #303844;
+  --link: #8ec5ff;
+  --notice: #202630;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+}
+main {
+  width: min(820px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: 54px 0;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+}
+h1 { margin: 0 0 18px; font-size: clamp(2rem, 6vw, 2.6rem); line-height: 1.15; }
+h2 { margin: 34px 0 12px; font-size: 1.28rem; }
+p, li { color: var(--muted); }
+strong { color: var(--text); }
+a { color: var(--link); }
+.notice {
+  margin: 24px 0;
+  padding: 16px 18px;
+  background: var(--notice);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.youtube-api {
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #ffffff;
+  color: #111;
+}
+.youtube-api p { color: #3d4651; margin-bottom: 12px; }
+.youtube-api img {
+  display: block;
+  width: 190px;
+  max-width: 70%;
+  height: auto;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+footer {
+  margin-top: 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: .9rem;
+}
+code { color: var(--text); }
