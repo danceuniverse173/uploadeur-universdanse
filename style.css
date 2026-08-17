@@ -147,3 +147,250 @@ code { color: var(--text); }
   margin-top: 15px;
   font-size: 0.88rem;
 }
+
+
+.section-kicker {
+  display: inline-block;
+  margin-bottom: 7px;
+  padding: 5px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+
+.uploader-ui {
+  margin-top: 34px;
+  padding: 26px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #101419;
+}
+
+.ui-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.field,
+.check-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field-wide {
+  grid-column: 1 / -1;
+}
+
+.field span,
+.check-field span {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.field small {
+  color: var(--muted);
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #0d1116;
+  color: var(--text);
+  font: inherit;
+}
+
+.check-field {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #0d1116;
+}
+
+.check-field input {
+  width: 18px;
+  height: 18px;
+}
+
+.ui-status,
+.action-message,
+.audit-note {
+  margin-top: 18px;
+  padding: 13px 15px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #171d24;
+  color: var(--muted);
+}
+
+.action-message {
+  color: var(--text);
+}
+
+.action-message.error {
+  border-color: #8d4b4b;
+}
+
+.detected-wrap,
+.schedule-panel {
+  margin-top: 26px;
+}
+
+.detected-wrap h3,
+.schedule-panel h3 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.language-cards {
+  display: grid;
+  gap: 10px;
+}
+
+.language-card {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto;
+  gap: 6px 14px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0d1116;
+}
+
+.language-card strong {
+  display: inline-block;
+  min-width: 44px;
+}
+
+.language-card span {
+  color: var(--muted);
+}
+
+.language-count {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.channel-status {
+  grid-column: 1 / -1;
+  font-size: .84rem;
+  color: var(--muted);
+}
+
+.ui-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.ui-button {
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.schedule-header span {
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.schedule-preview {
+  display: grid;
+  gap: 14px;
+}
+
+.schedule-language {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.schedule-language h4 {
+  margin: 0;
+  padding: 11px 13px;
+  background: #1a2028;
+}
+
+.schedule-row {
+  display: grid;
+  grid-template-columns: 38px 1fr 80px minmax(130px, auto);
+  gap: 10px;
+  padding: 9px 13px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.schedule-index {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.empty-state {
+  padding: 18px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+}
+
+.technical-details {
+  margin-top: 22px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0d1116;
+}
+
+.technical-details summary {
+  cursor: pointer;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.technical-details pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  padding: 14px;
+  border-radius: 8px;
+  background: #07090c;
+  color: #e8edf3;
+}
+
+.audit-note {
+  font-size: .9rem;
+}
+
+@media (max-width: 650px) {
+  .ui-grid {
+    grid-template-columns: 1fr;
+  }
+  .field-wide,
+  .check-field {
+    grid-column: auto;
+  }
+  .schedule-row {
+    grid-template-columns: 34px 1fr 70px;
+  }
+  .schedule-row span:last-child {
+    grid-column: 2 / -1;
+  }
+}

@@ -40,53 +40,136 @@
     </p>
 
     
-    <section class="script-section" id="script-reference">
-      <h2>Script de référence pour l'importation YouTube</h2>
+    
+    <section class="uploader-ui" id="interface-uploader">
+      <div class="section-kicker">Interface prévue</div>
+      <h2>Programmer les publications YouTube</h2>
 
       <p>
-        Afin de documenter concrètement le fonctionnement prévu du client API, le script Python
-        de référence pour l'importation et la programmation des vidéos est disponible publiquement.
+        Cette interface illustre les options utilisées par l'application de bureau.
+        Les vidéos sont préparées localement par langue, puis programmées à raison
+        d'une vidéo par jour et par chaîne, à la même heure.
       </p>
 
-      <p>
-        Le script lit les vidéos préparées localement et leurs métadonnées, utilise OAuth 2.0
-        pour autoriser chaque chaîne, puis appelle <code>youtube.videos.insert</code>.
-        Pour une publication programmée, la vidéo est envoyée en mode privé avec
-        <code>publishAt</code>, puis YouTube la rend publique à la date prévue.
-      </p>
+      <div class="ui-grid">
+        <label class="field field-wide">
+          <span>Dossier d'exports multilingues</span>
+          <input id="folderPicker" type="file" webkitdirectory directory multiple>
+          <small>
+            Sélection locale uniquement. Les fichiers ne sont pas envoyés par cette page.
+          </small>
+        </label>
 
-      <div class="flow">
-        <span>Fichiers vidéo locaux</span>
-        <span class="arrow">→</span>
-        <span>OAuth 2.0</span>
-        <span class="arrow">→</span>
-        <span>YouTube Data API v3</span>
-        <span class="arrow">→</span>
-        <span>videos.insert</span>
-        <span class="arrow">→</span>
-        <span>Publication programmée</span>
+        <label class="field">
+          <span>Date de départ</span>
+          <input id="startDate" type="date">
+        </label>
+
+        <label class="field">
+          <span>Heure de publication</span>
+          <input id="publishTime" type="time" value="18:00">
+        </label>
+
+        <label class="field">
+          <span>Fuseau horaire</span>
+          <select id="timezone">
+            <option value="Europe/Paris" selected>Europe/Paris</option>
+            <option value="America/New_York">America/New_York</option>
+            <option value="America/Los_Angeles">America/Los_Angeles</option>
+            <option value="Europe/London">Europe/London</option>
+            <option value="Europe/Berlin">Europe/Berlin</option>
+            <option value="Asia/Tokyo">Asia/Tokyo</option>
+            <option value="Asia/Seoul">Asia/Seoul</option>
+            <option value="Australia/Sydney">Australia/Sydney</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Catégorie YouTube</span>
+          <select id="categoryId">
+            <option value="24" selected>Divertissement (24)</option>
+            <option value="10">Musique (10)</option>
+            <option value="22">People & Blogs (22)</option>
+            <option value="17">Sport (17)</option>
+          </select>
+        </label>
+
+        <label class="check-field">
+          <input id="madeForKids" type="checkbox">
+          <span>Déclarer les vidéos comme conçues pour les enfants</span>
+        </label>
       </div>
 
-      <div class="button-row">
-        <a class="primary-button" href="youtube_multilang_uploader.py">
-          Voir le script Python
-        </a>
-        <a class="secondary-button" href="youtube_multilang_uploader.py" download>
-          Télécharger le script
-        </a>
-        <a class="secondary-button" href="README_YOUTUBE_UPLOADER.txt">
-          Documentation du script
-        </a>
-        <a class="secondary-button" href="requirements_youtube_uploader.txt">
-          Dépendances Python
-        </a>
+      <div class="ui-status" id="folderStatus">
+        Aucun dossier sélectionné.
       </div>
 
-      <p class="small-note">
-        Aucun identifiant OAuth, client secret, access token ou refresh token n'est publié
-        avec ce script.
-      </p>
+      <div class="detected-wrap">
+        <h3>Langues / chaînes détectées</h3>
+        <div id="languageCards" class="language-cards">
+          <div class="empty-state">
+            Sélectionne un dossier exporté pour afficher les langues et le nombre de vidéos.
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-actions">
+        <button type="button" class="primary-button ui-button" id="previewButton">
+          Générer l'aperçu du planning
+        </button>
+        <button type="button" class="secondary-button ui-button" id="authButton">
+          Autoriser les chaînes
+        </button>
+        <button type="button" class="secondary-button ui-button" id="uploadButton">
+          Programmer les uploads
+        </button>
+      </div>
+
+      <div id="actionMessage" class="action-message" hidden></div>
+
+      <div class="schedule-panel">
+        <div class="schedule-header">
+          <h3>Aperçu du calendrier</h3>
+          <span id="scheduleSummary"></span>
+        </div>
+        <div id="schedulePreview" class="schedule-preview">
+          <div class="empty-state">
+            Le calendrier sera affiché ici.
+          </div>
+        </div>
+      </div>
+
+      <details class="technical-details">
+        <summary>Voir les commandes Python correspondantes</summary>
+        <p>
+          L'application de bureau exécute ces commandes avec le script local.
+          Le chemin réel du dossier est choisi sur l'ordinateur de l'utilisateur.
+        </p>
+        <pre id="commandPreview">Sélectionne un dossier et une date pour générer les commandes.</pre>
+      </details>
+
+      <div class="audit-note">
+        <strong>Note pour l'audit :</strong>
+        cette page publique présente l'interface et le flux prévus.
+        L'exécution réelle des uploads se fait localement afin que les identifiants OAuth,
+        les jetons et les fichiers vidéo restent sur l'ordinateur du propriétaire.
+      </div>
     </section>
+
+
+    <section class="script-section" id="script-reference">
+      <h2>Code source de référence</h2>
+      <p>
+        Le script Python correspondant à cette interface est disponible pour examen.
+        Il utilise OAuth 2.0 et <code>youtube.videos.insert</code>.
+      </p>
+      <div class="button-row">
+        <a class="primary-button" href="youtube_multilang_uploader.py">Voir le script Python</a>
+        <a class="secondary-button" href="youtube_multilang_uploader.py" download>Télécharger le script</a>
+        <a class="secondary-button" href="README_YOUTUBE_UPLOADER.txt">Documentation</a>
+      </div>
+    </section>
+
 
     <section class="youtube-api" aria-label="Intégration prévue aux services API YouTube">
       <p><strong>Intégration prévue aux services API YouTube</strong></p>
@@ -112,5 +195,221 @@
   </section>
   <footer>Personal Video Uploader</footer>
 </main>
+
+<script>
+(function () {
+  const picker = document.getElementById("folderPicker");
+  const startDate = document.getElementById("startDate");
+  const publishTime = document.getElementById("publishTime");
+  const timezone = document.getElementById("timezone");
+  const categoryId = document.getElementById("categoryId");
+  const madeForKids = document.getElementById("madeForKids");
+  const folderStatus = document.getElementById("folderStatus");
+  const languageCards = document.getElementById("languageCards");
+  const previewButton = document.getElementById("previewButton");
+  const authButton = document.getElementById("authButton");
+  const uploadButton = document.getElementById("uploadButton");
+  const schedulePreview = document.getElementById("schedulePreview");
+  const scheduleSummary = document.getElementById("scheduleSummary");
+  const commandPreview = document.getElementById("commandPreview");
+  const actionMessage = document.getElementById("actionMessage");
+
+  let detected = {};
+
+  function todayPlus(days) {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    return d.toISOString().slice(0, 10);
+  }
+
+  if (!startDate.value) startDate.value = todayPlus(2);
+
+  function parseLanguageFolder(relativePath) {
+    const parts = relativePath.split("/");
+    if (parts.length < 2) return null;
+    const root = parts[0];
+    const languageFolder = parts[1];
+    if (!languageFolder) return null;
+    const code = languageFolder.split(/[_\-\s]/)[0].toLowerCase();
+    return { root, languageFolder, code };
+  }
+
+  function refreshDetected() {
+    detected = {};
+    const files = Array.from(picker.files || []);
+    if (!files.length) {
+      folderStatus.textContent = "Aucun dossier sélectionné.";
+      languageCards.innerHTML =
+        '<div class="empty-state">Sélectionne un dossier exporté pour afficher les langues et le nombre de vidéos.</div>';
+      refreshCommands();
+      return;
+    }
+
+    let rootName = "";
+    files.forEach(file => {
+      const info = parseLanguageFolder(file.webkitRelativePath || file.name);
+      if (!info) return;
+      rootName = info.root || rootName;
+      if (!detected[info.code]) {
+        detected[info.code] = {
+          folder: info.languageFolder,
+          videos: 0,
+          metadata: 0
+        };
+      }
+      const lower = file.name.toLowerCase();
+      if (/\.(mp4|mov|m4v|webm|mkv)$/.test(lower)) {
+        detected[info.code].videos += 1;
+      }
+      if (lower === "youtube_short.json" || lower === "youtube_short.txt") {
+        detected[info.code].metadata += 1;
+      }
+    });
+
+    const langCount = Object.keys(detected).length;
+    const videoCount = Object.values(detected).reduce((n, x) => n + x.videos, 0);
+    folderStatus.textContent =
+      `${rootName || "Dossier"} : ${langCount} langue(s), ${videoCount} vidéo(s) détectée(s).`;
+
+    const codes = Object.keys(detected).sort();
+    if (!codes.length) {
+      languageCards.innerHTML =
+        '<div class="empty-state">Aucun sous-dossier de langue détecté.</div>';
+    } else {
+      languageCards.innerHTML = codes.map(code => {
+        const item = detected[code];
+        return `
+          <div class="language-card">
+            <div>
+              <strong>${code.toUpperCase()}</strong>
+              <span>${item.folder}</span>
+            </div>
+            <div class="language-count">${item.videos} vidéo(s)</div>
+            <div class="channel-status">Token OAuth séparé : tokens/${code}.json</div>
+          </div>`;
+      }).join("");
+    }
+
+    refreshCommands();
+  }
+
+  function addDays(dateString, days) {
+    const d = new Date(dateString + "T12:00:00");
+    d.setDate(d.getDate() + days);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function formatDate(dateString) {
+    const d = new Date(dateString + "T12:00:00");
+    return new Intl.DateTimeFormat("fr-FR", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    }).format(d);
+  }
+
+  function buildSchedule() {
+    if (!startDate.value) {
+      showMessage("Choisis d'abord une date de départ.", true);
+      return;
+    }
+
+    const codes = Object.keys(detected).sort();
+    if (!codes.length) {
+      showMessage(
+        "Sélectionne d'abord un dossier d'exports pour générer un planning réel.",
+        true
+      );
+      return;
+    }
+
+    let total = 0;
+    let maxDays = 0;
+    let html = "";
+
+    codes.forEach(code => {
+      const count = detected[code].videos;
+      total += count;
+      maxDays = Math.max(maxDays, count);
+
+      html += `<div class="schedule-language"><h4>${code.toUpperCase()} · ${count} vidéo(s)</h4>`;
+      for (let i = 0; i < count; i++) {
+        const day = addDays(startDate.value, i);
+        html += `
+          <div class="schedule-row">
+            <span class="schedule-index">${i + 1}</span>
+            <span>${formatDate(day)}</span>
+            <span>${publishTime.value || "18:00"}</span>
+            <span>${timezone.value}</span>
+          </div>`;
+      }
+      html += "</div>";
+    });
+
+    schedulePreview.innerHTML = html;
+    scheduleSummary.textContent =
+      `${total} upload(s), jusqu'à ${maxDays} jour(s) par chaîne`;
+    showMessage(
+      "Aperçu généré. Chaque chaîne publiera une vidéo par jour à l'heure choisie.",
+      false
+    );
+    refreshCommands();
+  }
+
+  function refreshCommands() {
+    const root = picker.files && picker.files.length
+      ? (picker.files[0].webkitRelativePath || "DOSSIER_EXPORT").split("/")[0]
+      : "DOSSIER_EXPORT";
+    const date = startDate.value || "AAAA-MM-JJ";
+    const hour = publishTime.value || "18:00";
+    const tz = timezone.value || "Europe/Paris";
+    const kids = madeForKids.checked ? " --made-for-kids" : "";
+
+    commandPreview.textContent =
+`# 1. Prévisualiser
+python youtube_multilang_uploader.py plan "${root}" --start-date ${date} --time ${hour} --timezone ${tz}
+
+# 2. Autoriser une fois chaque chaîne/langue
+python youtube_multilang_uploader.py authorize "${root}" --client-secrets client_secrets.json
+
+# 3. Uploader et programmer
+python youtube_multilang_uploader.py upload "${root}" --start-date ${date} --time ${hour} --timezone ${tz} --category-id ${categoryId.value}${kids}`;
+  }
+
+  function showMessage(text, error) {
+    actionMessage.hidden = false;
+    actionMessage.textContent = text;
+    actionMessage.classList.toggle("error", !!error);
+  }
+
+  picker.addEventListener("change", refreshDetected);
+  [startDate, publishTime, timezone, categoryId, madeForKids].forEach(el => {
+    el.addEventListener("change", refreshCommands);
+  });
+
+  previewButton.addEventListener("click", buildSchedule);
+
+  authButton.addEventListener("click", function () {
+    showMessage(
+      "L'autorisation OAuth est exécutée par l'application locale. Le navigateur Google s'ouvre successivement pour chaque langue afin de sélectionner la chaîne correspondante.",
+      false
+    );
+    document.querySelector(".technical-details").open = true;
+    refreshCommands();
+  });
+
+  uploadButton.addEventListener("click", function () {
+    showMessage(
+      "La programmation réelle est exécutée localement par le script Python après confirmation. Cette page publique ne transmet ni vidéos ni secrets OAuth.",
+      false
+    );
+    document.querySelector(".technical-details").open = true;
+    refreshCommands();
+  });
+
+  refreshCommands();
+})();
+</script>
+
 </body>
 </html>
