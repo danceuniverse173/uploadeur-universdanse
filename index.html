@@ -39,6 +39,55 @@
       Elle est destinée uniquement à son propriétaire.
     </p>
 
+    
+    <section class="script-section" id="script-reference">
+      <h2>Script de référence pour l'importation YouTube</h2>
+
+      <p>
+        Afin de documenter concrètement le fonctionnement prévu du client API, le script Python
+        de référence pour l'importation et la programmation des vidéos est disponible publiquement.
+      </p>
+
+      <p>
+        Le script lit les vidéos préparées localement et leurs métadonnées, utilise OAuth 2.0
+        pour autoriser chaque chaîne, puis appelle <code>youtube.videos.insert</code>.
+        Pour une publication programmée, la vidéo est envoyée en mode privé avec
+        <code>publishAt</code>, puis YouTube la rend publique à la date prévue.
+      </p>
+
+      <div class="flow">
+        <span>Fichiers vidéo locaux</span>
+        <span class="arrow">→</span>
+        <span>OAuth 2.0</span>
+        <span class="arrow">→</span>
+        <span>YouTube Data API v3</span>
+        <span class="arrow">→</span>
+        <span>videos.insert</span>
+        <span class="arrow">→</span>
+        <span>Publication programmée</span>
+      </div>
+
+      <div class="button-row">
+        <a class="primary-button" href="youtube_multilang_uploader.py">
+          Voir le script Python
+        </a>
+        <a class="secondary-button" href="youtube_multilang_uploader.py" download>
+          Télécharger le script
+        </a>
+        <a class="secondary-button" href="README_YOUTUBE_UPLOADER.txt">
+          Documentation du script
+        </a>
+        <a class="secondary-button" href="requirements_youtube_uploader.txt">
+          Dépendances Python
+        </a>
+      </div>
+
+      <p class="small-note">
+        Aucun identifiant OAuth, client secret, access token ou refresh token n'est publié
+        avec ce script.
+      </p>
+    </section>
+
     <section class="youtube-api" aria-label="Intégration prévue aux services API YouTube">
       <p><strong>Intégration prévue aux services API YouTube</strong></p>
       <p>
